@@ -9,9 +9,17 @@ import SwiftUI
 
 @main
 struct ScrumdignerApp: App {
+    @ObservedObject private var scrums = ScrumData()
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            NavigationView {
+                ScrumsView(scrums: $scrums.scrums) {
+                    scrums.save()
+                }
+            }
+            .onAppear {
+                scrums.load()
+            }
         }
     }
 }
